@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react'
+import {React, useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import {AiFillCalculator} from 'react-icons/ai'
 import Form from './components/Form'
 import Result from './components/Result'
 import Spinner from './components/Spinner'
+import { generateId } from './helpers'
+import {Button, notification} from 'antd'
+import 'antd/dist/antd.css';
 
 const Content = styled.div`
   max-width: 90%;
@@ -41,20 +44,53 @@ function App() {
   const [result, setResult] = useState({})
   const [loading, setLoading] = useState(false)
 
+  const [currentPrice, setCurrentPrice] = useState({})
+  const [buys, setBuys] = useState([])
+
   useEffect(() => {
     if(Object.keys(pairCoins).length > 0){
 
       const getPrice = async () => {
         setLoading(true)
         setResult({})
-        const {coin, crypto} = pairCoins
+        const {coin, crypto, invest, profit} = pairCoins
 
         const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${coin}`
 
         const answer = await fetch(url)
         const result = await answer.json()
 
-        setResult(result.DISPLAY[crypto][coin]);      
+        const actualValue = invest / result.RAW[crypto][coin].PRICE
+        const futureValue = (invest + profit) / actualValue;
+
+        const objectBuy = {
+          id: generateId(),
+          date: Date.now(),
+          crypto: crypto,
+          coin: coin,
+          invest: invest,
+          profit: profit,
+          price: result.RAW[crypto][coin].PRICE,
+          future: futureValue
+        }
+
+        const {PRICE, HIGHDAY, LOWDAY, CHANGEDAY, LASTUPDATE, IMAGEURL} = result.DISPLAY[crypto][coin];
+
+        const objectShow = {
+          PRICE,
+          HIGHDAY, 
+          LOWDAY,
+          CHANGEDAY, 
+          LASTUPDATE,
+          IMAGEURL,
+          coin: coin,
+          invest: invest,
+          profit: profit,
+          future: futureValue
+        }
+
+        setResult(objectShow);   
+        setCurrentPrice(objectBuy)   
         setLoading(false)
       }
   
@@ -62,6 +98,33 @@ function App() {
     }
 
   }, [pairCoins])
+
+  //Local storage
+  useEffect(() => {
+    const getLocalStorage = () => {
+      const buysLS = JSON.parse(localStorage.getItem('buys')) ?? [];
+      setBuys(buysLS)
+    }
+
+    getLocalStorage()
+  }, [])
+
+  //Set buys in local Storage
+  useEffect(() => {
+    localStorage.setItem('buys', JSON.stringify(buys));
+  }, [buys])
+
+  const makeBuy = () => {
+    setBuys([...buys, currentPrice]);
+    notification.success({
+      message: 'Buy completed!',
+      description: `Did you buy ${currentPrice.invest} ${currentPrice.coin} in ${currentPrice.crypto}`,
+    });
+
+    setCurrentPrice({})
+    setResult({})  
+  }
+
 
   return (
     <>
@@ -76,6 +139,7 @@ function App() {
         {result.PRICE && (
           <Result
             result={result}
+            makeBuy={makeBuy}
           />
         )}
       </Content>

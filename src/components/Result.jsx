@@ -1,4 +1,5 @@
 import styled from "@emotion/styled"
+import {formatQuantity, dateFormat} from '../helpers'
 
 const Container = styled.div`
     background-color: #FFF;
@@ -33,12 +34,47 @@ const Text = styled.p`
     span{
         font-weight: 700;
     }
-
 `
 
-const Result = ({result}) => {
+const TextFuture = styled.p`
+    font-size: 25px;
+    color: #2578DC;
+    font-weight: 600;
+    span{
+        font-weight: 700;
+    }
+`
 
-    const {PRICE, HIGHDAY, LOWDAY, LASTUPDATE, IMAGEURL, CHANGEDAY} = result
+const Buy = styled.input`
+    background-color: #27d810;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    color: #FFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: background-color .3 ease;
+    margin-top: 30px;
+
+    &:hover{
+        background-color: #3fec28;
+        cursor: pointer;
+    }
+`
+
+const Result = ({result, makeBuy}) => {
+
+    const {PRICE, HIGHDAY, LOWDAY, CHANGEDAY, LASTUPDATE, IMAGEURL, coin, invest, profit, future} = result
+
+    const handleBuy = () => {
+        const answer = confirm(`Do you want buy with the pricie of: ${PRICE}`);
+
+        if(answer){
+            makeBuy();
+        }
+    }
 
     return (
         <Container>
@@ -51,7 +87,15 @@ const Result = ({result}) => {
                 <Text>Highest day price: <span>{HIGHDAY}</span></Text>
                 <Text>Lowest day price: <span>{LOWDAY}</span></Text>
                 <Text>Change day: <span>{CHANGEDAY}</span></Text>
-                <Text>Las update: <span>{LASTUPDATE}</span></Text>
+                <Text>Last Update: <span>{LASTUPDATE}</span></Text>
+                <Text>Invest: <span>{formatQuantity(invest, coin)}</span></Text>
+                <Text>Profit expected: <span>{formatQuantity(profit, coin)}</span></Text>
+                <TextFuture>Price to reach: <span>{formatQuantity(future, coin)}</span></TextFuture>
+                <Buy
+                    type="button"
+                    value="Buy"
+                    onClick={handleBuy}
+                />
             </div>
         </Container>
     )
