@@ -69,7 +69,7 @@ const Result = ({result, makeBuy}) => {
     const {PRICE, HIGHDAY, LOWDAY, CHANGEDAY, LASTUPDATE, IMAGEURL, coin, invest, profit, future} = result
 
     const handleBuy = () => {
-        const answer = confirm(`Do you want buy with the pricie of: ${PRICE}`);
+        const answer = confirm(`Do you want buy with the price of: ${PRICE}`);
 
         if(answer){
             makeBuy();

@@ -5,8 +5,9 @@ import Form from './components/Form'
 import Result from './components/Result'
 import Spinner from './components/Spinner'
 import { generateId } from './helpers'
-import {Button, notification} from 'antd'
+import {notification} from 'antd'
 import 'antd/dist/antd.css';
+import Buys from './components/Buys'
 
 const Content = styled.div`
   max-width: 90%;
@@ -69,8 +70,10 @@ function App() {
           crypto: crypto,
           coin: coin,
           invest: invest,
+          cryptoBuy: actualValue,
           profit: profit,
           price: result.RAW[crypto][coin].PRICE,
+          imagen: result.DISPLAY[crypto][coin].IMAGEURL,
           future: futureValue
         }
 
@@ -125,6 +128,17 @@ function App() {
     setResult({})  
   }
 
+  //Delete purchases
+  const deletePurcahse = (id) => {
+    console.log(id);
+    const buyUpdate = buys.filter(buy => buy.id !== id)
+    setBuys(buyUpdate);
+    console.log(buys);
+
+    notification.success({
+      message: 'Purchase Deleted!',
+    });
+  }
 
   return (
     <>
@@ -143,6 +157,10 @@ function App() {
           />
         )}
       </Content>
+      <Buys
+        buys={buys}
+        deletePurcahse={deletePurcahse}
+      />
     </>
   )
 }
