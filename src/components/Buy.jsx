@@ -2,7 +2,6 @@ import {React, useState, useEffect} from 'react'
 import styled from '@emotion/styled'
 import {Skeleton } from 'antd';
 import { formatQuantity, dateFormat } from '../helpers'
-import { PresetColorTypes } from 'antd/lib/_util/colors';
 
 const Content = styled.div`
     background-color: #FFF;
@@ -26,7 +25,7 @@ const Content = styled.div`
 `
 
 const Imagen = styled.img`
-    width: 80px;
+    width: 90px;
     margin-left: 25%;
     padding-bottom: 12px;
 `
@@ -34,9 +33,8 @@ const Imagen = styled.img`
 const Delete = styled.input`
     background-color: #0D2235;
     border: none;
-    width: 40%;
+    width: 70%;
     padding: 7px;
-    margin-left: 30%;
     color: #FFF;
     font-weight: 700;
     text-transform: uppercase;
@@ -57,17 +55,15 @@ const PriceBuy = styled.p`
 `
 
 const TextData = styled.p`
-    font-size: 16px;
+    font-size: 17px;
     color: '#0D2235';
     font-weight: 500;
 `
 
 const TextDate = styled.p`
-    font-size: 13px;
+    font-size: 12px;
     color: gray;
     font-weight: 500;
-    text-align: right;
-    margin-right: 4%;
 `
 
 const Table = styled.table`
@@ -76,13 +72,21 @@ const Table = styled.table`
     tr{
         td{
             width: 50%;
+            padding-left: 5%;
         }
     }
 `
 const Profit = styled.div`
-    font-size: 25px;
+    font-size: 21px;
     color: ${props => props.calcProfit > 0? props.calcProfit > props.profit?  '#4d58ec' : '#57df45' : '#ee3434'};
     font-weight: 700;
+`
+
+const Data = styled.p`
+    font-size: 13px;
+    color: gray;
+    font-weight: 500;
+
 `
 
 const Buy = ({buy, deletePurcahse}) => {
@@ -135,29 +139,28 @@ const Buy = ({buy, deletePurcahse}) => {
                                     alt="Crypto Imagen"
                                 />
                             </td>
-                            <td><PriceBuy>Purchase: {formatQuantity(invest, coin)} = {`${cryptoBuy.toFixed(10)} ${crypto}`}</PriceBuy></td>
+                            <td><PriceBuy>{formatQuantity(invest, coin)} <br/>{`${crypto} ${cryptoBuy.toFixed(10)}`}<br/><TextDate>{dateFormat(date)}</TextDate></PriceBuy></td>
                         </tr>
                         <tr>
-                            <td><TextData>Purchase price: {formatQuantity(price, coin)}</TextData></td>
-                            <td><TextData>Current Price: {formatQuantity(currentPrice, coin)}</TextData></td>
+                            <td><TextData>{formatQuantity(price, coin)}<Data>Purchase Price:</Data></TextData></td>
+                            <td><TextData>{formatQuantity(currentPrice, coin)}<Data>Current Price: </Data></TextData></td>
                         </tr>
                         <tr>
-                            <td><TextData>Profit expected: {formatQuantity(profit, coin)}</TextData></td>
-                            <td><TextData>Price to reach: {formatQuantity(future, coin)}</TextData></td>
+                            <td><TextData>{formatQuantity(profit, coin)}<Data>Profit Expected:</Data></TextData></td>
+                            <td><TextData>{formatQuantity(future, coin)}<Data>Price to Reach:</Data></TextData></td>
                         </tr>
                         <tr>
-                            <td colSpan={2}><Profit calcProfit={calcProfit} profit={profit}>Profit: {formatQuantity(calcProfit, coin)}</Profit></td>
-                        </tr>
-                        <tr>
-                            <td colSpan={2}><TextDate>Date: {dateFormat(date)}</TextDate></td>
+                            <td><Profit calcProfit={calcProfit} profit={profit}>Profit: {formatQuantity(calcProfit, coin)}</Profit></td>
+                            <td><Delete
+                                    type='button'
+                                    value='Delete'
+                                    onClick={handleDelete}
+                                />
+                            </td>
                         </tr>
                     </tbody>                       
                 </Table>                                                        
-                <Delete
-                    type='button'
-                    value='Delete'
-                    onClick={handleDelete}
-                />
+             
             </Content>
         )}
         </>

@@ -9,35 +9,35 @@ const Container = styled.div`
     -moz-box-shadow: 5px 12px 15px -10px rgb(255, 255, 255);
     background-color: #FFF;
     border-radius: 1.2rem;
-    font-family: 'Lato', sans-serif;
+    font-family: 'calibri', sans-serif;
     display: flex;
     align-items: center;
     gap: 4rem;
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 15px;
 `
 
 const Imagen = styled.img`
-    display: block;
-    width: 110px;
+    margin-left: 10px;
+    width: 100px;
 `
 
 const Price = styled.p`
-    font-size: 25px;
+    font-size: 22px;
     span{
         font-weight: 700;
     }
 `
 
 const Text = styled.p`
-    font-size: 20px;
+    font-size: 15px;
     span{
         font-weight: 700;
     }
 `
 
 const TextFuture = styled.p`
-    font-size: 25px;
+    font-size: 22px;
     color: #2578DC;
     font-weight: 600;
     span{
@@ -49,14 +49,13 @@ const Buy = styled.input`
     background-color: #27d810;
     border: none;
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     color: #FFF;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 20px;
     border-radius: 5px;
     transition: background-color .3 ease;
-    margin-top: 30px;
 
     &:hover{
         background-color: #3fec28;
@@ -87,7 +86,6 @@ const Result = ({result, makeBuy}) => {
                 <Text>Highest day price: <span>{HIGHDAY}</span></Text>
                 <Text>Lowest day price: <span>{LOWDAY}</span></Text>
                 <Text>Change day: <span>{CHANGEDAY}</span></Text>
-                <Text>Last Update: <span>{LASTUPDATE}</span></Text>
                 <Text>Invest: <span>{formatQuantity(invest, coin)}</span></Text>
                 <Text>Profit expected: <span>{formatQuantity(profit, coin)}</span></Text>
                 <TextFuture>Price to reach: <span>{formatQuantity(future, coin)}</span></TextFuture>

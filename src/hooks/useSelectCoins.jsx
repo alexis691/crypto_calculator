@@ -4,17 +4,17 @@ import styled from '@emotion/styled'
 const Label = styled.label`
     color: #0D2235;
     display: block; //pasarlo a la siguiente linea
-    font-family: 'Lato', sans-serif;
-    font-size: 24px;
+    font-family: 'calibri', sans-serif;
+    font-size: 17px;
     font-weight: 700;
-    margin: 15px;
+    margin: 5px;
 `
 
 const Select = styled.select`
     width: 100%;
-    font-size: 18px;
-    padding: 14px;
-    border-radius: 10px;
+    font-size: 15px;
+    padding: 7px;
+    border-radius: 5px;
 `
 
 const useSelectCoins = (label, options) => {

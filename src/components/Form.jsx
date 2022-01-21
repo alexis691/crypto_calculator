@@ -12,10 +12,10 @@ const InputSubmit = styled.input`
     color: #FFF;
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: 15px;
     border-radius: 5px;
     transition: background-color .3 ease;
-    margin-top: 30px;
+    margin-top: 15px;
 
     &:hover{
         background-color: #092642;
@@ -26,17 +26,17 @@ const InputSubmit = styled.input`
 const Label = styled.label`
     color: #0D2235;
     display: block; //pasarlo a la siguiente linea
-    font-family: 'Lato', sans-serif;
-    font-size: 24px;
+    font-family: 'Calibri', sans-serif;
+    font-size: 17px;
     font-weight: 700;
-    margin: 15px;
+    margin: 5px;
 `
 
 const Input = styled.input`
     width: 100%;
-    font-size: 18px;
-    padding: 14px;
-    border-radius: 10px;
+    font-size: 15px;
+    padding: 7px;
+    border-radius: 5px;
 `
 
 const Form = ({setPairCoins}) => {
@@ -74,7 +74,7 @@ const Form = ({setPairCoins}) => {
                 <SelectCoin/>
                 <SelectCrypto/>
                 
-                <Label>Invest</Label>
+                <Label>Investment</Label>
                 <Input
                     id='invest'
                     type='number'
@@ -82,7 +82,7 @@ const Form = ({setPairCoins}) => {
                     value={invest}
                     onChange={e => setInvest(Number(e.target.value))}
                 />
-                <Label>Profit</Label>
+                <Label>Profit Expected</Label>
                 <Input
                     id='profit'
                     type='number'

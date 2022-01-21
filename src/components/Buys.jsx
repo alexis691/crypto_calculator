@@ -8,7 +8,7 @@ const Content = styled.div`
 
 const Title = styled.h1`
     color: #FFF;
-    font-size: 35px;
+    font-size: 30px;
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     text-align: center;

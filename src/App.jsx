@@ -10,13 +10,13 @@ import 'antd/dist/antd.css';
 import Buys from './components/Buys'
 
 const Content = styled.div`
-  max-width: 90%;
+  max-width: 80%;
   margin: 0 auto;
-  width: 90%;
+  width: 80%;
   @media (min-width: 992px){
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 2rem;
+    column-gap: 5rem;
   }
 `
 
