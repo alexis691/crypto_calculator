@@ -121,7 +121,7 @@ function App() {
     setBuys([...buys, currentPrice]);
     notification.success({
       message: 'Buy completed!',
-      description: `Did you buy ${currentPrice.invest} ${currentPrice.coin} in ${currentPrice.crypto}`,
+      description: `Did you buy ${currentPrice.invest} ${currentPrice.coin} of ${currentPrice.crypto}`,
     });
 
     setCurrentPrice({})

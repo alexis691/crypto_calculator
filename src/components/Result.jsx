@@ -1,5 +1,9 @@
 import styled from "@emotion/styled"
-import {formatQuantity, dateFormat} from '../helpers'
+import {formatQuantity} from '../helpers'
+import {Modal as ModalAntd} from 'antd';
+import {DollarCircleOutlined} from '@ant-design/icons'
+
+const {confirm} = ModalAntd;
 
 const Container = styled.div`
     background-color: #FFF;
@@ -65,14 +69,19 @@ const Buy = styled.input`
 
 const Result = ({result, makeBuy}) => {
 
-    const {PRICE, HIGHDAY, LOWDAY, CHANGEDAY, LASTUPDATE, IMAGEURL, coin, invest, profit, future} = result
+    const {PRICE, HIGHDAY, LOWDAY, CHANGEDAY, IMAGEURL, coin, invest, profit, future} = result
 
     const handleBuy = () => {
-        const answer = confirm(`Do you want buy with the price of: ${PRICE}`);
-
-        if(answer){
-            makeBuy();
-        }
+        confirm({
+            title: `Do you want buy ${formatQuantity(invest, coin)} ?`,
+            content: `Current Price: ${formatQuantity(PRICE, coin)}`,
+            icon: <DollarCircleOutlined style={{ fontSize: '23px', color: '#2ee72e' }}/>,
+            okText: "Buy",
+            cancelText: "Cancel",
+            onOk() {
+                makeBuy();
+            }
+        })
     }
 
     return (

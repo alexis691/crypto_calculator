@@ -1,7 +1,10 @@
 import {React, useState, useEffect} from 'react'
 import styled from '@emotion/styled'
-import {Skeleton } from 'antd';
+import {Skeleton, Modal as ModalAntd} from 'antd';
 import { formatQuantity, dateFormat } from '../helpers'
+import {DeleteOutlined} from '@ant-design/icons'
+
+const {confirm} = ModalAntd;
 
 const Content = styled.div`
     background-color: #FFF;
@@ -33,7 +36,7 @@ const Imagen = styled.img`
 const Delete = styled.input`
     background-color: #0D2235;
     border: none;
-    width: 70%;
+    width: 92%;
     padding: 7px;
     color: #FFF;
     font-weight: 700;
@@ -48,13 +51,13 @@ const Delete = styled.input`
     }
 `
 
-const PriceBuy = styled.p`
+const PriceBuy = styled.h1`
     font-size: 19px;
     color: '#0D2235';
     font-weight: 700;
 `
 
-const TextData = styled.p`
+const TextData = styled.h1`
     font-size: 17px;
     color: '#0D2235';
     font-weight: 500;
@@ -78,8 +81,13 @@ const Table = styled.table`
 `
 const Profit = styled.div`
     font-size: 21px;
-    color: ${props => props.calcProfit > 0? props.calcProfit > props.profit?  '#4d58ec' : '#57df45' : '#ee3434'};
+    color: white;
     font-weight: 700;
+    background-color: ${props => props.calcProfit > 0? props.calcProfit > props.profit?  '#4d58ec' : '#57df45' : '#ee3434'};
+    border-radius: 5px;
+    padding: 2px;
+    text-align: center;
+    width: 92%;
 `
 
 const Data = styled.p`
@@ -116,11 +124,17 @@ const Buy = ({buy, deletePurcahse}) => {
 
     //Delete Crypto
     const handleDelete = () => {
-        const answer = confirm(`Do you want to delete this purchase?`);
-
-        if(answer){
-            deletePurcahse(id);
-        }
+        confirm({
+            title: "Do you want to delete this purchase?",
+            content: `${formatQuantity(invest, coin)}`,
+            icon: <DeleteOutlined  style={{ fontSize: '23px', color: '#f13b3b' }}/>,
+            okText: "Delete",
+            okType: "danger",
+            cancelText: "Cancel",
+            onOk() {
+                deletePurcahse(id);
+            }
+        })
     }
 
     return (
@@ -142,12 +156,12 @@ const Buy = ({buy, deletePurcahse}) => {
                             <td><PriceBuy>{formatQuantity(invest, coin)} <br/>{`${crypto} ${cryptoBuy.toFixed(10)}`}<br/><TextDate>{dateFormat(date)}</TextDate></PriceBuy></td>
                         </tr>
                         <tr>
-                            <td><TextData>{formatQuantity(price, coin)}<Data>Purchase Price:</Data></TextData></td>
-                            <td><TextData>{formatQuantity(currentPrice, coin)}<Data>Current Price: </Data></TextData></td>
+                            <td><TextData>{formatQuantity(price, coin)}<Data>Purchase Price</Data></TextData></td>
+                            <td><TextData>{formatQuantity(currentPrice, coin)}<Data>Current Price </Data></TextData></td>
                         </tr>
                         <tr>
-                            <td><TextData>{formatQuantity(profit, coin)}<Data>Profit Expected:</Data></TextData></td>
-                            <td><TextData>{formatQuantity(future, coin)}<Data>Price to Reach:</Data></TextData></td>
+                            <td><TextData>{formatQuantity(profit, coin)}<Data>Profit Expected</Data></TextData></td>
+                            <td><TextData>{formatQuantity(future, coin)}<Data>Price to Reach</Data></TextData></td>
                         </tr>
                         <tr>
                             <td><Profit calcProfit={calcProfit} profit={profit}>Profit: {formatQuantity(calcProfit, coin)}</Profit></td>
